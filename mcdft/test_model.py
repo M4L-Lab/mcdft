@@ -11,6 +11,7 @@ class ML_tester:
         self.out_file = FileIO(out_filename)
 
     def test(self):
+        # Predition algorithm take long. check !!
         for i in range(self.trainer.train_size, len(self.trainer.all_clusters)):
             t1 = time.time()
             new_cluster = self.trainer.all_clusters[i]
@@ -25,7 +26,10 @@ class ML_tester:
                 msg = f"{i:5} {real_E:10.5f} {str(np.nan):>11} {str(np.nan):>11} 1 {delta_time:20.3f}"
             else:
                 delta_time = time.time() - t1
-                err = pred_E - real_E
+                # err = pred_E - real_E
+                # why not err=|pred_E - real_E| ?
+                err = real_E - pred_E
+                msg = f"{i:5} {real_E:10.5f} {pred_E:10.5f} {err:10.5f} 0 {delta_time:20.3f}"
                 
             
             self.out_file.write_formatted_message(msg)
