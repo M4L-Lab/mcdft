@@ -2,7 +2,7 @@ from ase import Atoms, Atom
 from ase.io import read, write
 from itertools import combinations
 from structure_generator import swap_atoms
-from calculators import vasp_calculator, sro_calculator
+from calculators import vasp_calculator
 import random
 import math
 import numpy as np

@@ -12,6 +12,8 @@ cmd = "mpirun -n 64 ~/data/Software/vasp_std"
 atoms = read("POSCAR_AsP_seg")
 dir = os.getcwd()
 traj = Trajectory(dir + "/test_mcdft_AsP_seg.traj", "w")
+dir += f"/{Temp}"
 calc = vasp_calculator(atoms, dir, cmd)
 e = calc.calculate_energy(mc_step=0)
 mcdft = MCDFT(atoms, calc, e, Temp, N, traj)
+mcdft.build_traj()
