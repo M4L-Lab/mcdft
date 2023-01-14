@@ -1,71 +1,29 @@
-cmake_minimum_required(VERSION 3.9)
+# Require a modern version of CMake.
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0 FATAL_ERROR)
+PROJECT(mcdft)
 
-# Set a name and a version number for your project:
-project(
-  mcdft-structure
-  VERSION 0.0.1
-  LANGUAGES CXX)
+# Set default build type.
+IF(NOT CMAKE_BUILD_TYPE) 
+    SET(CMAKE_BUILD_TYPE Release)
+ENDIF()
 
-# Initialize some default paths
-include(GNUInstallDirs)
+# Additional flags for special builds.
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
-# Define the minimum C++ standard that is required
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Enable C++11 standard.
+IF(NOT CMAKE_VERSION VERSION_LESS "3.1")
+    SET(CMAKE_CXX_STANDARD 11)
+    SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+ELSE()
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+ENDIF()
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+# Add third-party libraries.
+SET(Catch2_INCLUDE_DIRS "src/ext/Catch2" )
+INCLUDE_DIRECTORIES(${Catch2_INCLUDE_DIRS})
 
-# Compilation options
-option(BUILD_PYTHON "Enable building of Python bindings" ON)
-option(BUILD_DOCS "Enable building of documentation" ON)
+# SET( EIGEN3_INCLUDE_DIR "src/3rdparty/eigen3/" )
+# INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 
-# compile the library
-add_subdirectory(src)
-
-# compile the application
-add_subdirectory(app)
-
-# compile the tests
-include(CTest)
-if(BUILD_TESTING)
-  add_subdirectory(ext/Catch2)
-  include(./ext/Catch2/contrib/Catch.cmake)
-  add_subdirectory(tests)
-endif()
-
-if(BUILD_PYTHON)
-  # Add Python bindings
-  add_subdirectory(ext/pybind11)
-
-  # Compile the Pybind11 module
-  pybind11_add_module(_mcdftstructure
-                      python/mcdftstructure/_mcdft-structure.cpp)
-  target_link_libraries(_mcdftstructure PUBLIC mcdft-structure)
-
-  # Install the Python module shared library
-  install(TARGETS _mcdftstructure DESTINATION .)
-endif()
-
-# Add an alias target for use if this project is included as a subproject in
-# another project
-add_library(mcdft-structure::mcdft-structure ALIAS mcdft-structure)
-
-# Install targets and configuration
-install(
-  TARGETS mcdft-structure
-  EXPORT mcdft-structure-config
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-install(
-  EXPORT mcdft-structure-config
-  NAMESPACE mcdft-structure::
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/mcdft-structure)
-
-install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
-# This prints a summary of found dependencies
-include(FeatureSummary)
-feature_summary(WHAT ALL)
+# Add main sources.
+ADD_SUBDIRECTORY(src)
