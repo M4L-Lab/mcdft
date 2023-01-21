@@ -1,1 +1,0 @@
-from structure_generator import swap_atoms
