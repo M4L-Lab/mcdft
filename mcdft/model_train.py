@@ -40,3 +40,14 @@ class ML_trainer:
 
         self.lof_model.fit(self.dX_train)
         self.ml_model.fit(self.dX_train, self.dY_train)
+
+    def refit(self, new_cluster, new_energy):
+        new_cluster = new_cluster.reshape(1, -1)
+        new_energy = np.array([new_energy])
+        new_dX = new_cluster - self.training_clusters
+        new_dY = new_energy - self.training_energy
+        self.ml_model.fit(new_dX, new_dY)
+        self.training_clusters = np.append(self.training_clusters, new_cluster, axis=0)
+        self.training_energy = np.append(self.training_energy, new_energy, axis=0)
+
+        self.lof_model.fit(new_dX)
