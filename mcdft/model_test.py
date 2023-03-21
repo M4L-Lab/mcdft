@@ -1,5 +1,4 @@
-from dd_mcdft.prediction_algorithm import predict_energy
-from sklearn.metrics import r2_score
+from mcdft.prediction_algorithm import predict_energy
 import numpy as np
 import time
 
