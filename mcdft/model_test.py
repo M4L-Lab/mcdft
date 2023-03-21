@@ -1,4 +1,5 @@
 from dd_mcdft.prediction_algorithm import predict_energy
+from dd_mcdft.file_io import FileIO
 from sklearn.metrics import r2_score
 import numpy as np
 import time
@@ -7,6 +8,7 @@ import time
 class ML_tester:
     def __init__(self, trainer, out_filename):
         self.trainer = trainer
+        self.out_file = FileIO(out_filename)
 
     def test(self):
         for i in range(self.trainer.train_size, len(self.trainer.all_clusters)):
@@ -23,3 +25,7 @@ class ML_tester:
                 delta_time = time.time() - t1
                 err = real_E - pred_E
                 msg = f"{i:5} {real_E:10.5f} {pred_E:10.5f} {err:10.5f} 0 {delta_time:20.3f}"
+
+            self.out_file.write_formatted_message(msg)
+            if i % 10 == 0:
+                print("-", end="", flush=True)
