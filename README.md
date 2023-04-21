@@ -1,4 +1,4 @@
-# mcdft_structure - Efficient Monte Carlo Simulation for High Entropy Alloy Systems
+# MCDFT - Efficient Monte Carlo Simulation for High Entropy Alloy Systems
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PyPI Release](https://img.shields.io/pypi/v/mcdftstructure.svg)](https://pypi.org/project/mcdftstructure)
@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Welcome to mcdft_structure! This open-source Python code is designed to provide an efficient solution for Monte Carlo simulation of high entropy alloy systems using a novel and highly efficient machine learning method. Our approach is inspired by the cluster expansion technique while overcoming its limitations by incorporating first-principles Density Functional Theory (DFT) calculations when necessary.
+Welcome to mcdft! This open-source Python code is designed to provide an efficient solution for Monte Carlo simulation of high entropy alloy systems using a novel and highly efficient machine learning method. Our approach is inspired by the cluster expansion technique while overcoming its limitations by incorporating first-principles Density Functional Theory (DFT) calculations when necessary.
 
 ## Features
 
@@ -26,7 +26,7 @@ Before building mcdft_structure, make sure you have the following software insta
 
 ## Building mcdft_structure
 
-To build mcdft_structure, follow these steps:
+To build mcdft, follow these steps:
 
 1. Clone the repository.
 2. Navigate to the top-level directory of the cloned repository.
@@ -39,7 +39,7 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 ```
 To install the project as a Python package without C++ build artifacts, use the following command:
-```python
+```bash
 python -m pip install .
 ```
 
